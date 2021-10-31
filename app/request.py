@@ -1,5 +1,5 @@
 import urllib.request,json
-from .models import Source,Articles
+from .models import Source, Article
 
 
 
@@ -96,7 +96,7 @@ def process_articles(articles_list):
         date = article_item.get('publishedAt')
          
         if image:
-            articles_result = Articles(
+            articles_result = Article(
                     id, author, title, description, url, image, date)
             articles_results.append(articles_result)
 
