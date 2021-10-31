@@ -1,38 +1,33 @@
-from flask import render_template
-from app import app
+from flask import render_template,request,redirect,url_for
+from . import main
+from ..request import get_sources,get_article
+from ..models import Source,Articles
 
-# Views
-@app.route('/')
+
+@main.route('/')
 def index():
 
     '''
     View root page function that returns the index page and its data
     '''
-    message = 'Hello World'
-    return render_template('index.html',message = message)
+    #Getting Technology related sources
 
-def index():
+    tech_sources = get_sources('technology')
+    business_sources = get_sources('business')
+    sports_sources = get_sources('sports')
+    
+    print(tech_sources)
+    title = 'The Daily News'
+    
+    return render_template('index.html', title = title, technology = tech_sources, business = business_sources, sports = sports_sources)
 
+@main.route('/source/<id>')
+def articles(id):
     '''
-    View root page function that returns the index page and its data
-    '''
-
-    title = 'Home - Welcome to The best News Updates '
-    return render_template('index.html', title = title)    
-
-@app.route('/news/<int:news_id>')
-def news(news_id):
-
-    '''
-    View movie page function that returns the movie details page and its data
-    '''
-    return render_template('movie.html',id = news_id)
-
-def index():
-
-    '''
-    View root page function that returns the index page and its data
+    view articles function that returns a list of articles on the articles
     '''
 
-    title = 'Home - Welcome to The best News Updates '
-    return render_template('index.html', title = title)
+    articles = get_article(id)
+    title = f'Headline {id}'    
+
+    return render_template('article.html',title = title, articles = articles)
