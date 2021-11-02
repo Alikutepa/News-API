@@ -1,8 +1,6 @@
-from flask import render_template,request,redirect,url_for
+from flask import render_template
 from . import main
 from ..request import get_sources,get_article
-from ..models import Source,Articles
-
 
 @main.route('/')
 def index():
@@ -30,4 +28,4 @@ def articles(id):
     articles = get_article(id)
     title = f'Headline {id}'    
 
-    return render_template('article.html',title = title, articles = articles)
+    return render_template('news.html',title = title, articles = articles)
